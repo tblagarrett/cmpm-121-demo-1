@@ -6,6 +6,7 @@ import { ChairManager } from "./chairs.ts";
 
 interface Item {
   name: string;
+  description: string;
   cost: number;
   rate: number;
 }
@@ -45,14 +46,51 @@ const purchaseButtonManager = new PurchaseButtonManager(
 
 const costScaling: number = 1.15;
 const availableItems: Item[] = [
-  { name: "Enthusiastic Helper", cost: 10, rate: 0.1 },
-  { name: "Chair Stacking Machine", cost: 100, rate: 2 },
-  { name: "Stacking Factory", cost: 1000, rate: 50 },
+  {
+    name: "Enthusiastic Helper",
+    description: "A student really wants to show off his strength.",
+    cost: 10,
+    rate: 0.1,
+  },
+  {
+    name: "Chair Stacking Machine",
+    description: "A machine can stack chairs higher than a human ever could",
+    cost: 100,
+    rate: 2,
+  },
+  {
+    name: "Stacking Factory",
+    description:
+      "With these factories, we will stack beyond our wildest dreams",
+    cost: 1000,
+    rate: 50,
+  },
+  {
+    name: "Country-Wide Stacking Program",
+    description: "Recruit all of our brightest minds to reach the stars",
+    cost: 10000,
+    rate: 275,
+  },
+  {
+    name: "Chair-Stacking God",
+    description:
+      "Our newest recruit will allow us to stack beyond the bounds of our Universe",
+    cost: 100000,
+    rate: 3000,
+  },
+  {
+    name: "Man-Made Chair Stacking Horrors",
+    description:
+      "We have stacked too high and learned the unknowable secrets of chair stacking",
+    cost: 1000000,
+    rate: 50000,
+  },
 ];
 
 for (const item of availableItems) {
   purchaseButtonManager.createButton(
     item.name,
+    item.description,
     item.cost,
     costScaling,
     item.rate

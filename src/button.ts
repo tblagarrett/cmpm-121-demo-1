@@ -51,6 +51,7 @@ export class PurchaseButtonManager {
 
   createButton(
     name: string,
+    description: string,
     cost: number,
     costScaling: number,
     incrementIncrease: number
@@ -58,6 +59,7 @@ export class PurchaseButtonManager {
     const button = new PurchaseButton(
       this.counter,
       name,
+      description,
       cost,
       costScaling,
       incrementIncrease,
@@ -88,6 +90,7 @@ export class PurchaseButtonManager {
 export class PurchaseButton {
   private counter: Counter;
   public name: string;
+  public description: string;
   public button: HTMLButtonElement;
   public cost: number;
   private costScaling: number;
@@ -98,6 +101,7 @@ export class PurchaseButton {
   constructor(
     counter: Counter,
     name: string,
+    description: string,
     cost: number,
     costScaling: number,
     incrementIncrease: number,
@@ -105,6 +109,7 @@ export class PurchaseButton {
   ) {
     this.counter = counter;
     this.name = name;
+    this.description = description;
     this.cost = cost;
     this.costScaling = costScaling;
     this.incrementIncrease = incrementIncrease;
@@ -113,14 +118,20 @@ export class PurchaseButton {
     this.button = this.createPurchaseButton();
     this.costButton = this.createCostDisplay();
 
+    // Wrap buttons and description
+    const descriptionWrapper = document.createElement("div");
+
     // Wrap both buttons in a div
     const wrapper = document.createElement("div");
     wrapper.style.display = "flex"; // Use flex to align buttons horizontally
     wrapper.appendChild(this.button);
     wrapper.appendChild(this.costButton);
 
+    descriptionWrapper.appendChild(wrapper);
+    descriptionWrapper.appendChild(this.createDescriptionElement());
+
     // Append button to the container
-    container.appendChild(wrapper);
+    container.appendChild(descriptionWrapper);
 
     this.button.addEventListener("click", () => this.makePurchase());
   }
@@ -152,6 +163,7 @@ export class PurchaseButton {
 
     // Add button styles
     button.style.margin = "10px";
+    button.style.marginBottom = "5px";
 
     return button;
   }
@@ -167,7 +179,23 @@ export class PurchaseButton {
     costButton.style.borderRadius = "8px";
     costButton.style.color = "white";
     costButton.style.marginTop = "10px";
-    costButton.style.marginBottom = "10px";
+    costButton.style.marginBottom = "5px";
     return costButton;
+  }
+
+  private createDescriptionElement(): HTMLButtonElement {
+    const descriptionButton = document.createElement("button");
+    descriptionButton.innerText = this.description;
+    descriptionButton.disabled = true; // Disabled button for cost
+    descriptionButton.classList.add("descriptionButton");
+    descriptionButton.style.backgroundColor = "#f9f9f9"; // Different color for cost
+    descriptionButton.style.cursor = "default";
+    descriptionButton.style.border = "1px solid transparent";
+    descriptionButton.style.borderRadius = "8px";
+    descriptionButton.style.color = "gray";
+    descriptionButton.style.marginTop = "0px";
+    descriptionButton.style.marginBottom = "15px";
+    descriptionButton.style.marginLeft = "10px";
+    return descriptionButton;
   }
 }
