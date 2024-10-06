@@ -14,6 +14,5 @@ const chairButtonContainer = document.createElement("div");
 chairButtonContainer.id = "ChairButtonContainer";
 app.append(chairButtonContainer);
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-// const button = 
+// const button =
 new ChairButton("ChairButtonContainer", "ChairButton", "0");
