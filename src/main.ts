@@ -16,4 +16,4 @@ app.append(chairButtonContainer);
 
 const button = new ChairButton("ChairButtonContainer", "ChairButton", "0");
 
-setInterval(() => button.periodicIncrement(), 1000);
+requestAnimationFrame(() => button.periodicIncrement());

@@ -2,10 +2,12 @@ export class ChairButton {
   private button: HTMLButtonElement;
   private counter: number;
   public incrementAmount: number;
+  private previousFrameTime: number;
 
   constructor(containerId: string, buttonId: string, buttonText: string) {
     this.counter = 0;
     this.incrementAmount = 1;
+    this.previousFrameTime = Date.now();
 
     // Create the button element
     this.button = document.createElement("button");
@@ -25,7 +27,7 @@ export class ChairButton {
   }
 
   private updateButtonText() {
-    this.button.innerText = this.counter.toString();
+    this.button.innerText = Math.floor(this.counter).toString();
   }
 
   private incrementCounter(amount: number) {
@@ -38,7 +40,14 @@ export class ChairButton {
   }
 
   public periodicIncrement() {
-    this.counter += this.incrementAmount;
+    const now = Date.now();
+    const elapsedMilliseconds = now - this.previousFrameTime;
+    const incrementFraction = elapsedMilliseconds / 1000;
+
+    this.counter += this.incrementAmount * incrementFraction;
+    this.previousFrameTime = now;
+
     this.updateButtonText();
+    requestAnimationFrame(() => this.periodicIncrement());
   }
 }
