@@ -1,6 +1,6 @@
 export class ChairButton {
-  private button: HTMLButtonElement;
-  private counter: number;
+  public button: HTMLButtonElement;
+  public counter: number;
   public incrementAmount: number;
   private previousFrameTime: number;
 
@@ -48,7 +48,6 @@ export class ChairButton {
     this.previousFrameTime = now;
 
     this.updateButtonText();
-    requestAnimationFrame(() => this.periodicIncrement());
   }
 }
 
@@ -63,18 +62,10 @@ export class PurchaseButtonManager {
     this.setupContainerStyles();
   }
 
-  createButton(name: string) {
-    const button = document.createElement("button");
-    button.innerText = name;
-    button.id = `button${this.buttonCount}`;
-
-    // Add button styles
-    button.style.padding = "10px 20px";
-    button.style.margin = "10px";
-
-    // Append button to the container
-    this.container.appendChild(button);
+  createButton(name: string): PurchaseButton {
+    const button = new PurchaseButton(name, this.container);
     this.buttonCount++;
+    return button;
   }
 
   private createContainer(containerId: string): HTMLElement {
@@ -91,5 +82,25 @@ export class PurchaseButtonManager {
     this.container.style.top = "0px";
     this.container.style.left = "0px";
     this.container.style.zIndex = "1000";
+  }
+}
+
+export class PurchaseButton {
+  public name: string;
+  public button: HTMLButtonElement;
+
+  constructor(name: string, container: HTMLElement) {
+    this.name = name;
+    this.button = document.createElement("button");
+    this.button.innerText = name;
+    this.button.id = name;
+    this.button.classList.add("purchasebutton");
+
+    // Add button styles
+    this.button.style.padding = "10px 20px";
+    this.button.style.margin = "10px";
+
+    // Append button to the container
+    container.appendChild(this.button);
   }
 }

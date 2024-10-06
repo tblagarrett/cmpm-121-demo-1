@@ -1,6 +1,7 @@
 import "./style.css";
 import { ChairButton } from "./button.ts";
 import { PurchaseButtonManager } from "./button.ts";
+import { PurchaseButton } from "./button.ts";
 
 const app: HTMLDivElement = document.querySelector("#app")!;
 
@@ -18,11 +19,29 @@ chairButtonContainer.id = "ChairButtonContainer";
 app.append(chairButtonContainer);
 
 // Set up Buttons
-const button = new ChairButton("ChairButtonContainer", "ChairButton", "0");
+const chairButton = new ChairButton("ChairButtonContainer", "ChairButton", "0");
 
 const purchaseButtonManager = new PurchaseButtonManager(
-  "PurchaseButtonContainer"
+  "PurchaseButtonContainer",
 );
-purchaseButtonManager.createButton("Elementary School Boys");
 
-requestAnimationFrame(() => button.periodicIncrement());
+const enthusiasticHelper: PurchaseButton = purchaseButtonManager.createButton(
+  "Enthusiastic Helper",
+);
+
+requestAnimationFrame(handleFrames);
+
+function handleFrames() {
+  chairButton.periodicIncrement();
+  handlePurchaseButtons();
+  requestAnimationFrame(handleFrames);
+
+  function handlePurchaseButtons() {
+    // Enthusiastic Helper
+    if (chairButton.counter < 10) {
+      enthusiasticHelper.button.disabled = true;
+    } else {
+      enthusiasticHelper.button.disabled = false;
+    }
+  }
+}
