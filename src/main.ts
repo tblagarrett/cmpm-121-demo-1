@@ -1,9 +1,14 @@
 import "./style.css";
 import { ChairButton } from "./button.ts";
 import { PurchaseButtonManager } from "./button.ts";
-import { PurchaseButton } from "./button.ts";
 import { Counter } from "./counter.ts";
 import { ChairManager } from "./chairs.ts";
+
+interface Item {
+  name: string;
+  cost: number;
+  rate: number;
+}
 
 const app: HTMLDivElement = document.querySelector("#app")!;
 
@@ -39,26 +44,20 @@ const purchaseButtonManager = new PurchaseButtonManager(
 );
 
 const costScaling: number = 1.15;
-const enthusiasticHelper: PurchaseButton = purchaseButtonManager.createButton(
-  "Enthusiastic Helper",
-  10, // cost
-  costScaling, // cost scaling
-  0.1 // increment amount
-);
+const availableItems: Item[] = [
+  { name: "Enthusiastic Helper", cost: 10, rate: 0.1 },
+  { name: "Chair Stacking Machine", cost: 100, rate: 2 },
+  { name: "Stacking Factory", cost: 1000, rate: 50 },
+];
 
-const chairStackingMachine: PurchaseButton = purchaseButtonManager.createButton(
-  "Chair Stacking Machine",
-  100, // cost
-  costScaling, // cost scaling
-  2 // increment amount
-);
-
-const stackingFactory: PurchaseButton = purchaseButtonManager.createButton(
-  "Stacking Factory",
-  1000, // cost
-  costScaling, // cost scaling
-  50 // increment amount
-);
+for (const item of availableItems) {
+  purchaseButtonManager.createButton(
+    item.name,
+    item.cost,
+    costScaling,
+    item.rate
+  );
+}
 
 // Set up chair images
 const chairManager: ChairManager = new ChairManager("./assets/chair.png");
@@ -78,25 +77,12 @@ function handleFrames() {
   requestAnimationFrame(handleFrames);
 
   function handlePurchaseButtons() {
-    // Enthusiastic Helper
-    if (counter.count < enthusiasticHelper.cost) {
-      enthusiasticHelper.button.disabled = true;
-    } else {
-      enthusiasticHelper.button.disabled = false;
-    }
-
-    // Chair Stacking Machine
-    if (counter.count < chairStackingMachine.cost) {
-      chairStackingMachine.button.disabled = true;
-    } else {
-      chairStackingMachine.button.disabled = false;
-    }
-
-    // Stacking Factory
-    if (counter.count < stackingFactory.cost) {
-      stackingFactory.button.disabled = true;
-    } else {
-      stackingFactory.button.disabled = false;
+    for (const purchaseButton of purchaseButtonManager.purchaseButtons) {
+      if (counter.count < purchaseButton.cost) {
+        purchaseButton.button.disabled = true;
+      } else {
+        purchaseButton.button.disabled = false;
+      }
     }
   }
 

@@ -38,6 +38,7 @@ export class PurchaseButtonManager {
   private container: HTMLElement;
   private buttonCount: number;
   private counter: Counter;
+  public purchaseButtons: PurchaseButton[];
 
   constructor(counter: Counter, containerId: string) {
     this.counter = counter;
@@ -45,6 +46,7 @@ export class PurchaseButtonManager {
       document.getElementById(containerId) || this.createContainer(containerId);
     this.buttonCount = 0;
     this.setupContainerStyles();
+    this.purchaseButtons = [];
   }
 
   createButton(
@@ -62,6 +64,7 @@ export class PurchaseButtonManager {
       this.container
     );
     this.buttonCount++;
+    this.purchaseButtons.push(button);
     return button;
   }
 
