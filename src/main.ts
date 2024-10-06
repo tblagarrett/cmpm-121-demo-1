@@ -2,6 +2,7 @@ import "./style.css";
 import { ChairButton } from "./button.ts";
 import { PurchaseButtonManager } from "./button.ts";
 import { PurchaseButton } from "./button.ts";
+import { Counter } from "./counter.ts";
 
 const app: HTMLDivElement = document.querySelector("#app")!;
 
@@ -18,27 +19,40 @@ const chairButtonContainer = document.createElement("div");
 chairButtonContainer.id = "ChairButtonContainer";
 app.append(chairButtonContainer);
 
+// Initialize Counter
+const counter = new Counter();
+
 // Set up Buttons
-const chairButton = new ChairButton("ChairButtonContainer", "ChairButton", "0");
+const chairButton = new ChairButton(
+  "ChairButtonContainer",
+  "ChairButton",
+  "0",
+  counter
+);
+counter.chairButton = chairButton;
 
 const purchaseButtonManager = new PurchaseButtonManager(
-  "PurchaseButtonContainer",
+  counter,
+  "PurchaseButtonContainer"
 );
 
 const enthusiasticHelper: PurchaseButton = purchaseButtonManager.createButton(
   "Enthusiastic Helper",
+  10, // cost
+  1, // cost scaling
+  1 // increment amount
 );
 
 requestAnimationFrame(handleFrames);
 
 function handleFrames() {
-  chairButton.periodicIncrement();
+  counter.periodicIncrement();
   handlePurchaseButtons();
   requestAnimationFrame(handleFrames);
 
   function handlePurchaseButtons() {
     // Enthusiastic Helper
-    if (chairButton.counter < 10) {
+    if (counter.count < enthusiasticHelper.cost) {
       enthusiasticHelper.button.disabled = true;
     } else {
       enthusiasticHelper.button.disabled = false;

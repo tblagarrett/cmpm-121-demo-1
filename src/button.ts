@@ -1,13 +1,16 @@
+import { Counter } from "./counter";
+
 export class ChairButton {
   public button: HTMLButtonElement;
-  public counter: number;
-  public incrementAmount: number;
-  private previousFrameTime: number;
+  public counter: Counter;
 
-  constructor(containerId: string, buttonId: string, buttonText: string) {
-    this.counter = 0;
-    this.incrementAmount = 0;
-    this.previousFrameTime = Date.now();
+  constructor(
+    containerId: string,
+    buttonId: string,
+    buttonText: string,
+    counter: Counter
+  ) {
+    this.counter = counter;
 
     // Create the button element
     this.button = document.createElement("button");
@@ -15,7 +18,7 @@ export class ChairButton {
     this.button.innerText = buttonText;
 
     // Add click event listener
-    this.button.addEventListener("click", () => this.incrementCounter(1));
+    this.button.addEventListener("click", () => counter.incrementCounter(1));
 
     // Insert the button into the DOM
     const container = document.getElementById(containerId);
@@ -26,44 +29,38 @@ export class ChairButton {
     }
   }
 
-  private updateButtonText() {
-    this.button.innerText = Math.floor(this.counter).toString();
-  }
-
-  private incrementCounter(amount: number) {
-    this.counter += amount;
-    this.updateButtonText();
-  }
-
-  public addToIncrementAmount(addition: number) {
-    this.incrementAmount += addition;
-  }
-
-  public periodicIncrement() {
-    const now = Date.now();
-    const elapsedMilliseconds = now - this.previousFrameTime;
-    const incrementFraction = elapsedMilliseconds / 1000;
-
-    this.counter += this.incrementAmount * incrementFraction;
-    this.previousFrameTime = now;
-
-    this.updateButtonText();
+  public updateButtonText() {
+    this.button.innerText = Math.floor(this.counter.count).toString();
   }
 }
 
 export class PurchaseButtonManager {
   private container: HTMLElement;
   private buttonCount: number;
+  private counter: Counter;
 
-  constructor(containerId: string) {
+  constructor(counter: Counter, containerId: string) {
+    this.counter = counter;
     this.container =
       document.getElementById(containerId) || this.createContainer(containerId);
     this.buttonCount = 0;
     this.setupContainerStyles();
   }
 
-  createButton(name: string): PurchaseButton {
-    const button = new PurchaseButton(name, this.container);
+  createButton(
+    name: string,
+    cost: number,
+    costScaling: number,
+    incrementIncrease: number
+  ): PurchaseButton {
+    const button = new PurchaseButton(
+      this.counter,
+      name,
+      cost,
+      costScaling,
+      incrementIncrease,
+      this.container
+    );
     this.buttonCount++;
     return button;
   }
@@ -86,11 +83,27 @@ export class PurchaseButtonManager {
 }
 
 export class PurchaseButton {
+  private counter: Counter;
   public name: string;
   public button: HTMLButtonElement;
+  public cost: number;
+  private costScaling: number;
+  private incrementIncrease: number;
 
-  constructor(name: string, container: HTMLElement) {
+  constructor(
+    counter: Counter,
+    name: string,
+    cost: number,
+    costScaling: number,
+    incrementIncrease: number,
+    container: HTMLElement
+  ) {
+    this.counter = counter;
     this.name = name;
+    this.cost = cost;
+    this.costScaling = costScaling;
+    this.incrementIncrease = incrementIncrease;
+
     this.button = document.createElement("button");
     this.button.innerText = name;
     this.button.id = name;
@@ -102,5 +115,14 @@ export class PurchaseButton {
 
     // Append button to the container
     container.appendChild(this.button);
+
+    this.button.addEventListener("click", () => this.makePurchase());
+  }
+
+  private makePurchase() {
+    this.counter.incrementCounter(-this.cost);
+    this.counter.addToIncrementAmount(this.incrementIncrease);
+    this.cost *= this.costScaling;
+    this.counter.updateText();
   }
 }
