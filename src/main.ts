@@ -3,6 +3,7 @@ import { ChairButton } from "./button.ts";
 import { PurchaseButtonManager } from "./button.ts";
 import { PurchaseButton } from "./button.ts";
 import { Counter } from "./counter.ts";
+import { ChairManager } from "./chairs.ts";
 
 const app: HTMLDivElement = document.querySelector("#app")!;
 
@@ -59,11 +60,18 @@ const stackingFactory: PurchaseButton = purchaseButtonManager.createButton(
   50 // increment amount
 );
 
+// Set up chair images
+const chairManager: ChairManager = new ChairManager("./assets/chair.png");
+chairManager.addChairToPage();
+let countForNextChair = 5;
+const chairRequirementScaleFactor = 1.5;
+
 requestAnimationFrame(handleFrames);
 
 function handleFrames() {
   counter.periodicIncrement();
   handlePurchaseButtons();
+  handleChairImages();
   updateIncrementRateText(IncrementRateText);
 
   // loop
@@ -89,6 +97,13 @@ function handleFrames() {
       stackingFactory.button.disabled = true;
     } else {
       stackingFactory.button.disabled = false;
+    }
+  }
+
+  function handleChairImages() {
+    if (counter.totalCount > countForNextChair) {
+      chairManager.addChairToPage();
+      countForNextChair *= chairRequirementScaleFactor;
     }
   }
 }

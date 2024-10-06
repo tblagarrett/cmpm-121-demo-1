@@ -2,12 +2,14 @@ import { ChairButton } from "./button";
 
 export class Counter {
   public count;
+  public totalCount;
   public incrementAmount: number;
   private previousFrameTime: number;
   private _chairButton: ChairButton | null = null;
 
   constructor() {
     this.count = 0;
+    this.totalCount = 0;
     this.incrementAmount = 0;
     this.previousFrameTime = Date.now();
   }
@@ -22,6 +24,7 @@ export class Counter {
 
   public incrementCounter(amount: number) {
     this.count += amount;
+    this.totalCount += amount;
 
     this.updateText();
   }
@@ -35,10 +38,8 @@ export class Counter {
     const elapsedMilliseconds = now - this.previousFrameTime;
     const incrementFraction = elapsedMilliseconds / 1000;
 
-    this.count += this.incrementAmount * incrementFraction;
+    this.incrementCounter(this.incrementAmount * incrementFraction);
     this.previousFrameTime = now;
-
-    this.updateText();
   }
 
   public updateText() {
