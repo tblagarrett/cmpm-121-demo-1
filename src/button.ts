@@ -6,7 +6,7 @@ export class ChairButton {
 
   constructor(containerId: string, buttonId: string, buttonText: string) {
     this.counter = 0;
-    this.incrementAmount = 1;
+    this.incrementAmount = 0;
     this.previousFrameTime = Date.now();
 
     // Create the button element
