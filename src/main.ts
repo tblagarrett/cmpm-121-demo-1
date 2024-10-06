@@ -14,5 +14,6 @@ const chairButtonContainer = document.createElement("div");
 chairButtonContainer.id = "ChairButtonContainer";
 app.append(chairButtonContainer);
 
-// const button =
-new ChairButton("ChairButtonContainer", "ChairButton", "0");
+const button = new ChairButton("ChairButtonContainer", "ChairButton", "0");
+
+setInterval(() => button.periodicIncrement(), 1000);
