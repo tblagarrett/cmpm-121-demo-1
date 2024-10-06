@@ -28,20 +28,34 @@ const chairButton = new ChairButton(
   "ChairButtonContainer",
   "ChairButton",
   "0",
-  counter,
+  counter
 );
 counter.chairButton = chairButton;
 
 const purchaseButtonManager = new PurchaseButtonManager(
   counter,
-  "PurchaseButtonContainer",
+  "PurchaseButtonContainer"
 );
 
 const enthusiasticHelper: PurchaseButton = purchaseButtonManager.createButton(
   "Enthusiastic Helper",
   10, // cost
   1, // cost scaling
-  1, // increment amount
+  0.1 // increment amount
+);
+
+const chairStackingMachine: PurchaseButton = purchaseButtonManager.createButton(
+  "B",
+  100, // cost
+  1, // cost scaling
+  2 // increment amount
+);
+
+const stackingFactory: PurchaseButton = purchaseButtonManager.createButton(
+  "C",
+  1000, // cost
+  1, // cost scaling
+  50 // increment amount
 );
 
 requestAnimationFrame(handleFrames);
@@ -60,6 +74,20 @@ function handleFrames() {
       enthusiasticHelper.button.disabled = true;
     } else {
       enthusiasticHelper.button.disabled = false;
+    }
+
+    // Chair Stacking Machine
+    if (counter.count < chairStackingMachine.cost) {
+      chairStackingMachine.button.disabled = true;
+    } else {
+      chairStackingMachine.button.disabled = false;
+    }
+
+    // Stacking Factory
+    if (counter.count < stackingFactory.cost) {
+      stackingFactory.button.disabled = true;
+    } else {
+      stackingFactory.button.disabled = false;
     }
   }
 }
