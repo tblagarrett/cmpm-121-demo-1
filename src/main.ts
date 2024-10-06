@@ -37,24 +37,25 @@ const purchaseButtonManager = new PurchaseButtonManager(
   "PurchaseButtonContainer"
 );
 
+const costScaling: number = 1.15;
 const enthusiasticHelper: PurchaseButton = purchaseButtonManager.createButton(
   "Enthusiastic Helper",
   10, // cost
-  1, // cost scaling
+  costScaling, // cost scaling
   0.1 // increment amount
 );
 
 const chairStackingMachine: PurchaseButton = purchaseButtonManager.createButton(
   "B",
   100, // cost
-  1, // cost scaling
+  costScaling, // cost scaling
   2 // increment amount
 );
 
 const stackingFactory: PurchaseButton = purchaseButtonManager.createButton(
   "C",
   1000, // cost
-  1, // cost scaling
+  costScaling, // cost scaling
   50 // increment amount
 );
 

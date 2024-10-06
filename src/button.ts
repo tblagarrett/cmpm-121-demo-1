@@ -133,6 +133,12 @@ export class PurchaseButton {
 
   private updateText() {
     this.button.innerText = `${this.name}: ${this.purchaseCount}`;
+
+    if (this.cost % 1 == 0) {
+      this.costButton.innerText = this.cost.toString();
+    } else {
+      this.costButton.innerText = this.cost.toFixed(1);
+    }
   }
 
   private createPurchaseButton(): HTMLButtonElement {
