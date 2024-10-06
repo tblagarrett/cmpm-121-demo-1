@@ -8,7 +8,7 @@ export class ChairButton {
     containerId: string,
     buttonId: string,
     buttonText: string,
-    counter: Counter,
+    counter: Counter
   ) {
     this.counter = counter;
 
@@ -51,7 +51,7 @@ export class PurchaseButtonManager {
     name: string,
     cost: number,
     costScaling: number,
-    incrementIncrease: number,
+    incrementIncrease: number
   ): PurchaseButton {
     const button = new PurchaseButton(
       this.counter,
@@ -59,7 +59,7 @@ export class PurchaseButtonManager {
       cost,
       costScaling,
       incrementIncrease,
-      this.container,
+      this.container
     );
     this.buttonCount++;
     return button;
@@ -89,6 +89,7 @@ export class PurchaseButton {
   public cost: number;
   private costScaling: number;
   private incrementIncrease: number;
+  private costButton: HTMLButtonElement;
 
   constructor(
     counter: Counter,
@@ -96,7 +97,7 @@ export class PurchaseButton {
     cost: number,
     costScaling: number,
     incrementIncrease: number,
-    container: HTMLElement,
+    container: HTMLElement
   ) {
     this.counter = counter;
     this.name = name;
@@ -104,17 +105,17 @@ export class PurchaseButton {
     this.costScaling = costScaling;
     this.incrementIncrease = incrementIncrease;
 
-    this.button = document.createElement("button");
-    this.button.innerText = name;
-    this.button.id = name;
-    this.button.classList.add("purchasebutton");
+    this.button = this.createPurchaseButton();
+    this.costButton = this.createCostDisplay();
 
-    // Add button styles
-    this.button.style.padding = "10px 20px";
-    this.button.style.margin = "10px";
+    // Wrap both buttons in a div
+    const wrapper = document.createElement("div");
+    wrapper.style.display = "flex"; // Use flex to align buttons horizontally
+    wrapper.appendChild(this.button);
+    wrapper.appendChild(this.costButton);
 
     // Append button to the container
-    container.appendChild(this.button);
+    container.appendChild(wrapper);
 
     this.button.addEventListener("click", () => this.makePurchase());
   }
@@ -124,5 +125,32 @@ export class PurchaseButton {
     this.counter.addToIncrementAmount(this.incrementIncrease);
     this.cost *= this.costScaling;
     this.counter.updateText();
+  }
+
+  private createPurchaseButton(): HTMLButtonElement {
+    const button = document.createElement("button");
+    button.innerText = this.name;
+    button.id = this.name;
+    button.classList.add("purchasebutton");
+
+    // Add button styles
+    button.style.margin = "10px";
+
+    return button;
+  }
+
+  private createCostDisplay(): HTMLButtonElement {
+    const costButton = document.createElement("button");
+    costButton.innerText = `Cost: ${this.cost}`;
+    costButton.disabled = true; // Disabled button for cost
+    costButton.classList.add("costbutton");
+    costButton.style.backgroundColor = "gray"; // Different color for cost
+    costButton.style.cursor = "default";
+    costButton.style.border = "1px solid transparent";
+    costButton.style.borderRadius = "8px";
+    costButton.style.color = "white";
+    costButton.style.marginTop = "10px";
+    costButton.style.marginBottom = "10px";
+    return costButton;
   }
 }

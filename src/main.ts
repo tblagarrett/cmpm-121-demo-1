@@ -21,6 +21,7 @@ app.append(chairButtonContainer);
 
 // Initialize Counter
 const counter = new Counter();
+const IncrementRateText = addIncrementRateText();
 
 // Set up Buttons
 const chairButton = new ChairButton(
@@ -48,6 +49,7 @@ requestAnimationFrame(handleFrames);
 function handleFrames() {
   counter.periodicIncrement();
   handlePurchaseButtons();
+  updateIncrementRateText(IncrementRateText);
 
   // loop
   requestAnimationFrame(handleFrames);
@@ -60,4 +62,29 @@ function handleFrames() {
       enthusiasticHelper.button.disabled = false;
     }
   }
+}
+
+function addIncrementRateText(): HTMLDivElement {
+  const textElem = document.createElement("div");
+  textElem.id = "topRightText";
+  updateIncrementRateText(textElem);
+
+  // Add styling
+  textElem.style.position = "fixed";
+  textElem.style.top = "0";
+  textElem.style.right = "0";
+  textElem.style.padding = "10px";
+  textElem.style.backgroundColor = "#333";
+  textElem.style.color = "white";
+  textElem.style.fontSize = "1.2em";
+  textElem.style.zIndex = "1000";
+
+  // Append to the body
+  document.body.appendChild(textElem);
+  return textElem;
+}
+
+function updateIncrementRateText(incrementRateText: HTMLDivElement) {
+  incrementRateText.innerText =
+    "rate: " + counter.incrementAmount.toFixed(1).toString() + "/sec";
 }
