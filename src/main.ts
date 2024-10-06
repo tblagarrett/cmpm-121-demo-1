@@ -28,20 +28,20 @@ const chairButton = new ChairButton(
   "ChairButtonContainer",
   "ChairButton",
   "0",
-  counter
+  counter,
 );
 counter.chairButton = chairButton;
 
 const purchaseButtonManager = new PurchaseButtonManager(
   counter,
-  "PurchaseButtonContainer"
+  "PurchaseButtonContainer",
 );
 
 const enthusiasticHelper: PurchaseButton = purchaseButtonManager.createButton(
   "Enthusiastic Helper",
   10, // cost
   1, // cost scaling
-  1 // increment amount
+  1, // increment amount
 );
 
 requestAnimationFrame(handleFrames);

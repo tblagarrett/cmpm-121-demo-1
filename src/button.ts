@@ -90,6 +90,7 @@ export class PurchaseButton {
   private costScaling: number;
   private incrementIncrease: number;
   private costButton: HTMLButtonElement;
+  private purchaseCount: number;
 
   constructor(
     counter: Counter,
@@ -104,6 +105,7 @@ export class PurchaseButton {
     this.cost = cost;
     this.costScaling = costScaling;
     this.incrementIncrease = incrementIncrease;
+    this.purchaseCount = 0;
 
     this.button = this.createPurchaseButton();
     this.costButton = this.createCostDisplay();
@@ -124,12 +126,18 @@ export class PurchaseButton {
     this.counter.incrementCounter(-this.cost);
     this.counter.addToIncrementAmount(this.incrementIncrease);
     this.cost *= this.costScaling;
+    this.purchaseCount++;
     this.counter.updateText();
+    this.updateText();
+  }
+
+  private updateText() {
+    this.button.innerText = `${this.name}: ${this.purchaseCount}`;
   }
 
   private createPurchaseButton(): HTMLButtonElement {
     const button = document.createElement("button");
-    button.innerText = this.name;
+    button.innerText = `${this.name}: ${this.purchaseCount}`;
     button.id = this.name;
     button.classList.add("purchasebutton");
 
