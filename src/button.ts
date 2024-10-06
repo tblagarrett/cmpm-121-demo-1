@@ -8,7 +8,7 @@ export class ChairButton {
     containerId: string,
     buttonId: string,
     buttonText: string,
-    counter: Counter
+    counter: Counter,
   ) {
     this.counter = counter;
 
@@ -51,7 +51,7 @@ export class PurchaseButtonManager {
     name: string,
     cost: number,
     costScaling: number,
-    incrementIncrease: number
+    incrementIncrease: number,
   ): PurchaseButton {
     const button = new PurchaseButton(
       this.counter,
@@ -59,7 +59,7 @@ export class PurchaseButtonManager {
       cost,
       costScaling,
       incrementIncrease,
-      this.container
+      this.container,
     );
     this.buttonCount++;
     return button;
@@ -96,7 +96,7 @@ export class PurchaseButton {
     cost: number,
     costScaling: number,
     incrementIncrease: number,
-    container: HTMLElement
+    container: HTMLElement,
   ) {
     this.counter = counter;
     this.name = name;

@@ -48,6 +48,8 @@ requestAnimationFrame(handleFrames);
 function handleFrames() {
   counter.periodicIncrement();
   handlePurchaseButtons();
+
+  // loop
   requestAnimationFrame(handleFrames);
 
   function handlePurchaseButtons() {
