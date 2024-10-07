@@ -98,7 +98,7 @@ for (const item of availableItems) {
 }
 
 // Set up chair images
-const chairManager: ChairManager = new ChairManager("./src/assets/chair.png");
+const chairManager: ChairManager = new ChairManager("assets/chair.png");
 chairManager.addChairToPage();
 let countForNextChair = 5;
 const chairRequirementScaleFactor = 1.5;
@@ -154,5 +154,5 @@ function addIncrementRateText(): HTMLDivElement {
 
 function updateIncrementRateText(incrementRateText: HTMLDivElement) {
   incrementRateText.innerText =
-    "rate: " + counter.incrementAmount.toFixed(1).toString() + "/sec";
+    "chairs per second: " + counter.incrementAmount.toFixed(1).toString();
 }
