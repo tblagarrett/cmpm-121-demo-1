@@ -3,6 +3,7 @@ import { ChairButton } from "./button.ts";
 import { PurchaseButtonManager } from "./button.ts";
 import { Counter } from "./counter.ts";
 import { ChairManager } from "./chairs.ts";
+import imgUrl from "../images/chair.png";
 
 interface Item {
   name: string;
@@ -98,7 +99,7 @@ for (const item of availableItems) {
 }
 
 // Set up chair images
-const chairManager: ChairManager = new ChairManager("images/chair.png");
+const chairManager: ChairManager = new ChairManager(imgUrl);
 chairManager.addChairToPage();
 let countForNextChair = 5;
 const chairRequirementScaleFactor = 1.5;
