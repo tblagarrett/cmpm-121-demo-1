@@ -164,6 +164,7 @@ export class PurchaseButton {
     // Add button styles
     button.style.margin = "10px";
     button.style.marginBottom = "5px";
+    button.style.textShadow = "0px 0.5px 0 black";
 
     return button;
   }
