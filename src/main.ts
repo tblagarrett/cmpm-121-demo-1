@@ -98,7 +98,7 @@ for (const item of availableItems) {
 }
 
 // Set up chair images
-const chairManager: ChairManager = new ChairManager("assets/chair.png");
+const chairManager: ChairManager = new ChairManager("images/chair.png");
 chairManager.addChairToPage();
 let countForNextChair = 5;
 const chairRequirementScaleFactor = 1.5;
