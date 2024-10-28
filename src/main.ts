@@ -36,13 +36,13 @@ const chairButton = new ChairButton(
   "ChairButtonContainer",
   "ChairButton",
   "0",
-  counter
+  counter,
 );
 counter.chairButton = chairButton;
 
 const purchaseButtonManager = new PurchaseButtonManager(
   counter,
-  "PurchaseButtonContainer"
+  "PurchaseButtonContainer",
 );
 
 const costScaling: number = 1.15;
@@ -94,7 +94,7 @@ for (const item of availableItems) {
     item.description,
     item.cost,
     costScaling,
-    item.rate
+    item.rate,
   );
 }
 
