@@ -36,16 +36,16 @@ const chairButton = new ChairButton(
   "ChairButtonContainer",
   "ChairButton",
   "0",
-  counter,
+  counter
 );
 counter.chairButton = chairButton;
 
 const purchaseButtonManager = new PurchaseButtonManager(
   counter,
-  "PurchaseButtonContainer",
+  "PurchaseButtonContainer"
 );
 
-const costScaling: number = 1.15;
+const COST_SCALING: number = 1.15;
 const availableItems: Item[] = [
   {
     name: "Enthusiastic Helper",
@@ -93,8 +93,8 @@ for (const item of availableItems) {
     item.name,
     item.description,
     item.cost,
-    costScaling,
-    item.rate,
+    COST_SCALING,
+    item.rate
   );
 }
 
@@ -102,7 +102,7 @@ for (const item of availableItems) {
 const chairManager: ChairManager = new ChairManager(imgUrl);
 chairManager.addChairToPage();
 let countForNextChair = 5;
-const chairRequirementScaleFactor = 1.5;
+const CHAIR_REQUIREMENT_SCALE_FACTOR = 1.5;
 
 requestAnimationFrame(handleFrames);
 
@@ -128,7 +128,7 @@ function handleFrames() {
   function handleChairImages() {
     if (counter.totalCount > countForNextChair) {
       chairManager.addChairToPage();
-      countForNextChair *= chairRequirementScaleFactor;
+      countForNextChair *= CHAIR_REQUIREMENT_SCALE_FACTOR;
     }
   }
 }
