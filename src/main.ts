@@ -29,7 +29,7 @@ app.append(chairButtonContainer);
 
 // Initialize Counter
 const counter = new Counter();
-const IncrementRateText = addIncrementRateText();
+const incrementRateText = addIncrementRateText();
 
 // Set up Buttons
 const chairButton = new ChairButton(
@@ -110,7 +110,7 @@ function handleFrames() {
   counter.periodicIncrement();
   handlePurchaseButtons();
   handleChairImages();
-  updateIncrementRateText(IncrementRateText);
+  updateIncrementRateText(incrementRateText);
 
   // loop
   requestAnimationFrame(handleFrames);
