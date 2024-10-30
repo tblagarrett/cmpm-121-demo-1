@@ -17,6 +17,7 @@ const app: HTMLDivElement = document.querySelector("#app")!;
 // Game overview
 const gameName = "Chair Stack";
 document.title = gameName;
+document.body.style.background = "#9e6010";
 
 // Add elements
 const header = document.createElement("h1");
