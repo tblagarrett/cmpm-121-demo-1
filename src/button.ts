@@ -8,7 +8,7 @@ export class ChairButton {
     containerId: string,
     buttonId: string,
     buttonText: string,
-    counter: Counter,
+    counter: Counter
   ) {
     this.counter = counter;
 
@@ -54,7 +54,7 @@ export class PurchaseButtonManager {
     description: string,
     cost: number,
     costScaling: number,
-    incrementIncrease: number,
+    incrementIncrease: number
   ): PurchaseButton {
     const button = new PurchaseButton(
       this.counter,
@@ -63,7 +63,7 @@ export class PurchaseButtonManager {
       cost,
       costScaling,
       incrementIncrease,
-      this.container,
+      this.container
     );
     this.buttonCount++;
     this.purchaseButtons.push(button);
@@ -105,7 +105,7 @@ export class PurchaseButton {
     cost: number,
     costScaling: number,
     incrementIncrease: number,
-    container: HTMLElement,
+    container: HTMLElement
   ) {
     this.counter = counter;
     this.name = name;
@@ -149,9 +149,9 @@ export class PurchaseButton {
     this.button.innerText = `${this.name}: ${this.purchaseCount}`;
 
     if (this.cost % 1 <= 0.001) {
-      this.costButton.innerText = `Cost: ${this.cost.toString()}`;
+      this.costButton.innerText = `Rate: ${this.incrementIncrease} Cost: ${this.cost.toString()}`;
     } else {
-      this.costButton.innerText = `Cost: ${this.cost.toFixed(1)}`;
+      this.costButton.innerText = `Rate: ${this.incrementIncrease} Cost: ${this.cost.toFixed(1)}`;
     }
   }
 
@@ -171,7 +171,7 @@ export class PurchaseButton {
 
   private createCostDisplay(): HTMLButtonElement {
     const costButton = document.createElement("button");
-    costButton.innerText = `Cost: ${this.cost}`;
+    costButton.innerText = `Rate: ${this.incrementIncrease} Cost: ${this.cost.toString()}`;
     costButton.disabled = true; // Disabled button for cost
     costButton.classList.add("costbutton");
     costButton.style.backgroundColor = "gray"; // Different color for cost
